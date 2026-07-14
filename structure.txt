@@ -1,0 +1,74 @@
+# ============================================================
+#  汉字笔顺 MCP 项目 - 项目结构
+# ============================================================
+
+hanzi-write/
+│
+├── src/                          # 源代码目录
+│   ├── lib/                      # 共享逻辑库
+│   │   ├── constants.ts          # 常量定义（城市、示例汉字、CDN 地址）
+│   │   ├── weather-client.ts     # 天气 API 客户端封装
+│   │   └── hanzi-writer-loader.ts # HanziWriter 库动态加载
+│   │
+│   └── tools/                    # MCP 工具（每个文件对应一个工具）
+│       ├── weather.tsx           # 天气查询 UI 工具（调用 Open-Meteo API）
+│       └── hanzi-writer.tsx      # 汉字笔顺动画与描红练习 UI 工具
+│
+├── web/                           # Next.js Web 预览端
+│   ├── app/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx              # 主页面（Inspector 结果加载器）
+│   ├── components/
+│   │   └── McpUiRenderer.tsx     # MCP UI 渲染器（iframe 加载）
+│   ├── public/
+│   │   └── mcp-apps/             # 构建后的 MCP UI HTML 文件
+│   └── package.json
+│
+├── dist/                          # 构建产物（运行 build 后生成）
+│   ├── http.js                    # MCP HTTP 服务入口
+│   └── client/                    # 前端打包产物
+│
+├── .xmcp/                         # xmcp 框架运行时缓存
+│
+├── .env.example                   # 环境变量示例
+├── .gitignore                     # Git 忽略规则
+├── commands.txt                   # 常用命令汇总（本文件）
+├── structure.txt                  # 项目结构说明
+├── globals.css                    # 全局样式（Tailwind）
+├── package.json                   # 项目依赖与脚本
+├── postcss.config.mjs             # PostCSS 配置
+├── tsconfig.json                  # TypeScript 配置
+├── xmcp.config.ts                 # xmcp 框架配置
+├── xmcp-env.d.ts                  # xmcp 类型声明
+└── xmcp.svg                       # 项目图标
+
+# ============================================================
+#  关键文件说明
+# ============================================================
+
+【xmcp.config.ts】
+  xmcp 框架的主配置文件，定义了：
+  - http: true          # 启用 HTTP 传输模式
+  - paths.tools          # MCP 工具目录（./src/tools）
+  - template.icons       # 工具图标
+
+【package.json】
+  项目依赖管理和脚本定义：
+  - npm run dev         # 开发模式
+  - npm run build       # 生产构建
+  - npm start           # 启动服务
+  - npm run typecheck   # TypeScript 类型检查
+  - npm run clean       # 清理构建产物
+
+【src/lib/ 目录】
+  存放可复用的业务逻辑，与具体工具解耦：
+  - constants.ts        # 所有常量集中管理，支持环境变量覆盖
+  - weather-client.ts   # 天气数据获取，可独立测试
+  - hanzi-writer-loader.ts # HanziWriter CDN 加载，可复用
+
+【src/tools/ 目录】
+  每个文件是一个独立的 MCP 工具，必须导出：
+  - schema              # 输入参数校验（zod schema）
+  - metadata            # 工具元数据（名称、描述、CSP 等）
+  - default export      # 工具处理函数（返回 UI 或数据）

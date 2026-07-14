@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.vercel
+
+# Build output
+dist
+.xmcp
+xmcp-env.d.ts
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Keys & Certificates
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.crt
+id_rsa
+id_dsa
+id_ed25519
+
+# Credentials
+credentials*
+*secret*
+*token*
+*.credentials
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
